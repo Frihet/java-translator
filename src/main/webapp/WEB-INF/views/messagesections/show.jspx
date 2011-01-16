@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show id="ps_no_freecode_translator_domain_MessageSection" object="${messagesection}" path="/messagesections" z="FFmsN8d8WcSyt0siwqQOu0s0Icg=">
+        <field:display field="description" id="s_no_freecode_translator_domain_MessageSection_description" object="${messagesection}" z="DdWjJX7IdUHzf2/vHhEaK5vwvvA="/>
+        <field:display field="messages" id="s_no_freecode_translator_domain_MessageSection_messages" object="${messagesection}" z="f4EOqYtCNmoSJOk5i1L+Qy8KVOc="/>
+    </page:show>
+</div>

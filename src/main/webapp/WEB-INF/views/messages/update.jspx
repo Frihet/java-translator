@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_no_freecode_translator_domain_Message" modelAttribute="message" path="/messages" z="xJUcEMXL3OxThdv+qvGyoG+S6sM=">
+        <field:input field="property" id="c_no_freecode_translator_domain_Message_property" min="1" required="true" z="tdA/eKD0qEBKbLJo1A2Km5Bea64="/>
+        
+    
+    
+    </form:update>
+</div>

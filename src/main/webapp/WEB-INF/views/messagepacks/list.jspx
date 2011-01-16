@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:list id="pl_no_freecode_translator_domain_MessagePack" items="${messagepacks}" z="VOboZoVx1tdzWQINpaAuVu3G9d0=">
+        <table:table data="${messagepacks}" id="l_no_freecode_translator_domain_MessagePack" path="/messagepacks" z="ei/o18M6YSTSrWCcvtD+tMk5R/A=">
+            <table:column id="c_no_freecode_translator_domain_MessagePack_locale" property="locale" z="0GYJEU64EDH5Fz1fXJRnGhtSWTY="/>
+            <table:column id="c_no_freecode_translator_domain_MessagePack_messageSections" property="messageSections" z="lZPE9sf3wIyTdUmnZCDoBoSNjUs="/>
+        </table:table>
+    </page:list>
+</div>

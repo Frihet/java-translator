@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:form="urn:jsptagdir:/WEB-INF/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+    <jsp:output omit-xml-declaration="yes"/>
+    <form:update id="fu_no_freecode_translator_domain_MessagePack" modelAttribute="messagePack" path="/messagepacks" z="v+rSDMWm7hv9NaV3TExYajW3vas=">
+        <field:input field="locale" id="c_no_freecode_translator_domain_MessagePack_locale" z="f6+G6V9OhixPURsytIUcLQK0yDk="/>
+        <field:select field="messageSections" id="c_no_freecode_translator_domain_MessagePack_messageSections" itemValue="id" items="${messagesections}" multiple="true" path="/messagesections" z="MeF1vFKVpp5c66ZnGw20CGKzNwY="/>
+    </form:update>
+</div>
