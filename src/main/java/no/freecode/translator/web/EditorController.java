@@ -9,7 +9,12 @@
  */
 package no.freecode.translator.web;
 
+import java.util.List;
+
+import no.freecode.translator.domain.MessageSection;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,14 +23,17 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Reidar Øksnevad <reidar.oksnevad@freecode.no>
  *
  */
-@Controller("editor")
+@Controller
 public class EditorController {
 
-    @RequestMapping(method = RequestMethod.GET, value = "update")
+    @RequestMapping(method = RequestMethod.GET, value = "editor")
     public String editMessages(
+    		Model model,
             @RequestParam(value = "locale", required = false) String locale) {
-        
-        return "editor/update";
+
+    	List<MessageSection> sections = MessageSection.findAllMessageSectionsSorted();
+    	model.addAttribute("sections", sections);
+        return "editor/index";
     }
 
 }

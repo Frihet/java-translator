@@ -61,7 +61,7 @@ privileged aspect MessageLocale_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            MessageLocale attached = this.entityManager.find(this.getClass(), this.id);
+            MessageLocale attached = MessageLocale.findMessageLocale(this.id);
             this.entityManager.remove(attached);
         }
     }

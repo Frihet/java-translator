@@ -85,8 +85,12 @@ public class MessageImporter {
                         curSection = new MessageSection();
                         sections.put(curSectionId, curSection);
                     }
+
+                    if (StringUtils.isNotBlank(curComment)) {
+                    	curSection.setDescription(curComment);
+                    	curComment = null;
+                    }
                     
-                    curSection.setDescription(curComment);
                     Set<Message> messages = curSection.getMessages();
                     if (messages == null) {
                         messages = new HashSet<Message>();
@@ -105,9 +109,6 @@ public class MessageImporter {
 
                     message.setProperty(key);
                     message.getTranslations().put(locale, value);
-                    
-//                    message.persist();
-//                    message.flush();
 
                     messages.add(message);
 

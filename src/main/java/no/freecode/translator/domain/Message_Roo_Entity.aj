@@ -61,7 +61,7 @@ privileged aspect Message_Roo_Entity {
         if (this.entityManager.contains(this)) {
             this.entityManager.remove(this);
         } else {
-            Message attached = this.entityManager.find(this.getClass(), this.id);
+            Message attached = Message.findMessage(this.id);
             this.entityManager.remove(attached);
         }
     }

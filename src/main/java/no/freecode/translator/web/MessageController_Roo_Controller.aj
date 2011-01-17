@@ -4,17 +4,14 @@
 package no.freecode.translator.web;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import no.freecode.translator.domain.Message;
 import no.freecode.translator.domain.MessageLocale;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,9 +23,6 @@ import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
 privileged aspect MessageController_Roo_Controller {
-    
-    @Autowired
-    private GenericConversionService MessageController.conversionService;
     
     @RequestMapping(method = RequestMethod.POST)
     public String MessageController.create(@Valid Message message, BindingResult result, Model model, HttpServletRequest request) {
@@ -106,29 +100,7 @@ privileged aspect MessageController_Roo_Controller {
         return MessageLocale.findAllMessageLocales();
     }
     
-    Converter<Message, String> MessageController.getMessageConverter() {
-        return new Converter<Message, String>() {
-            public String convert(Message message) {
-                return new StringBuilder().append(message.getProperty()).toString();
-            }
-        };
-    }
-    
-    Converter<MessageLocale, String> MessageController.getMessageLocaleConverter() {
-        return new Converter<MessageLocale, String>() {
-            public String convert(MessageLocale messageLocale) {
-                return new StringBuilder().append(messageLocale.getName()).append(" ").append(messageLocale.getDescription()).toString();
-            }
-        };
-    }
-    
-    @PostConstruct
-    void MessageController.registerConverters() {
-        conversionService.addConverter(getMessageConverter());
-        conversionService.addConverter(getMessageLocaleConverter());
-    }
-    
-    private String MessageController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {
+    String MessageController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {
         String enc = request.getCharacterEncoding();
         if (enc == null) {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
