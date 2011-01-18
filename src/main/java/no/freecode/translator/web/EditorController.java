@@ -11,6 +11,7 @@ package no.freecode.translator.web;
 
 import java.util.List;
 
+import no.freecode.translator.domain.MessageLocale;
 import no.freecode.translator.domain.MessageSection;
 
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,10 @@ public class EditorController {
     		Model model,
             @RequestParam(value = "locale", required = false) String locale) {
 
+        List<MessageLocale> locales = MessageLocale.findAllMessageLocalesSorted();
     	List<MessageSection> sections = MessageSection.findAllMessageSectionsSorted();
+    	
+    	model.addAttribute("locales", locales);
     	model.addAttribute("sections", sections);
         return "editor/index";
     }

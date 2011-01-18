@@ -1,5 +1,7 @@
 package no.freecode.translator.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
@@ -17,4 +19,9 @@ public class MessageLocale {
     private String name;
 
     private String description;
+    
+    public static List<MessageLocale> findAllMessageLocalesSorted() {
+        return entityManager().createQuery("select o from MessageLocale o order by name", MessageLocale.class).getResultList();
+    }
+
 }

@@ -7,12 +7,19 @@
     <c:forEach items="${sections}" var="section">
       <tbody>
         <tr>
-          <th>${section.description}</th>
+          <th colspan="${fn:length(locales) + 1}">${section.description}</th>
         </tr>
-        
+
         <c:forEach items="${section.messages}" var="message">
           <tr>
-            <td>${message}</td>
+            <td>${message.property}</td>
+
+            <c:forEach items="${locales}" var="locale">
+              <td>${message.translations[locale]}</td>
+<%--
+              <form:input path="section[].messages[].translations[locale]" />
+ --%>
+            </c:forEach>
           </tr>
         </c:forEach>
       </tbody>
