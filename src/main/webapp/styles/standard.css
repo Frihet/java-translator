@@ -231,7 +231,7 @@ table {
 	margin: 2px 0 0 0;
 	border: 1px solid #BBBBBB;
 	border-collapse: collapse;
-	width: 100%
+/*	width: 100%*/
 }
 
 table table {
@@ -364,4 +364,29 @@ fieldset th {
 .flag {
 	height: 11px;
 	width: 16px;
+}
+
+
+/* Editor. */
+#editor textarea {
+    margin: -1px;
+    width: 100%;
+}
+
+#editor td {
+    width: 350px;
+}
+
+#editor td.property {
+    width: auto;
+    padding-right: 1em;
+    font-weight: bold;
+}
+
+#editor .buttonrow {
+    margin: 1em 0;
+}
+
+#editor .buttonrow button {
+/*    float: right;*/
 }

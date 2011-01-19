@@ -25,5 +25,5 @@ public class Message extends BaseEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<MessageLocale, String> translations = new HashMap<MessageLocale, String>();
-    
+
 }
