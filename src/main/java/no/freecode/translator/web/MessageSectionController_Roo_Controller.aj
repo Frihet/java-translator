@@ -5,7 +5,6 @@ package no.freecode.translator.web;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.Integer;
-import java.lang.Long;
 import java.lang.String;
 import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ privileged aspect MessageSectionController_Roo_Controller {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String MessageSectionController.show(@PathVariable("id") Long id, Model model) {
+    public String MessageSectionController.show(@PathVariable("id") String id, Model model) {
         model.addAttribute("messagesection", MessageSection.findMessageSection(id));
         model.addAttribute("itemId", id);
         return "messagesections/show";
@@ -71,13 +70,13 @@ privileged aspect MessageSectionController_Roo_Controller {
     }
     
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
-    public String MessageSectionController.updateForm(@PathVariable("id") Long id, Model model) {
+    public String MessageSectionController.updateForm(@PathVariable("id") String id, Model model) {
         model.addAttribute("messageSection", MessageSection.findMessageSection(id));
         return "messagesections/update";
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String MessageSectionController.delete(@PathVariable("id") Long id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
+    public String MessageSectionController.delete(@PathVariable("id") String id, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "size", required = false) Integer size, Model model) {
         MessageSection.findMessageSection(id).remove();
         model.addAttribute("page", (page == null) ? "1" : page.toString());
         model.addAttribute("size", (size == null) ? "10" : size.toString());

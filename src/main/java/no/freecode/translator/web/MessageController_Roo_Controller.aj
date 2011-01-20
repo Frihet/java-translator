@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import no.freecode.translator.domain.Message;
 import no.freecode.translator.domain.MessageLocale;
+import no.freecode.translator.domain.MessageSection;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -98,6 +99,11 @@ privileged aspect MessageController_Roo_Controller {
     @ModelAttribute("messagelocales")
     public Collection<MessageLocale> MessageController.populateMessageLocales() {
         return MessageLocale.findAllMessageLocales();
+    }
+    
+    @ModelAttribute("messagesections")
+    public Collection<MessageSection> MessageController.populateMessageSections() {
+        return MessageSection.findAllMessageSections();
     }
     
     String MessageController.encodeUrlPathSegment(String pathSegment, HttpServletRequest request) {

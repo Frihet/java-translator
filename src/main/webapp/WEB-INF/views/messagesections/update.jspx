@@ -3,6 +3,6 @@
     <jsp:output omit-xml-declaration="yes"/>
     <form:update id="fu_no_freecode_translator_domain_MessageSection" modelAttribute="messageSection" path="/messagesections" z="OW8VvVoxi/q/Azf7wQNN0pyfLsI=">
         <field:input field="description" id="c_no_freecode_translator_domain_MessageSection_description" z="Jo2JgX+pI2EA9dLjB8lMRW0ITUc="/>
-        <field:select field="messages" id="c_no_freecode_translator_domain_MessageSection_messages" itemValue="id" items="${messages}" multiple="true" path="/messages" z="lPT29gEkS55irz0AaJbuTRxcq2Q="/>
+        <field:simple field="messages" id="c_no_freecode_translator_domain_MessageSection_messages" messageCode="entity_reference_not_managed" messageCodeAttribute="Message" z="XjHFC0cy+8HfWPcojrRBKOq6HLk="/>
     </form:update>
 </div>

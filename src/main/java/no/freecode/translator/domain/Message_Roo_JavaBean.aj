@@ -6,8 +6,17 @@ package no.freecode.translator.domain;
 import java.lang.String;
 import java.util.Map;
 import no.freecode.translator.domain.MessageLocale;
+import no.freecode.translator.domain.MessageSection;
 
 privileged aspect Message_Roo_JavaBean {
+    
+    public MessageSection Message.getMessageSection() {
+        return this.messageSection;
+    }
+    
+    public void Message.setMessageSection(MessageSection messageSection) {
+        this.messageSection = messageSection;
+    }
     
     public String Message.getProperty() {
         return this.property;

@@ -13,7 +13,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,9 +44,9 @@ public class MessageImporter {
         
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(input));
 
-        HashMap<String, MessageSection> sections = new HashMap<String, MessageSection>();
+//        HashMap<String, MessageSection> sections = new HashMap<String, MessageSection>();
 
-        MessageSection curSection = new MessageSection();
+//        MessageSection curSection = new MessageSection();
         String curSectionId;
         String curComment = null;
 
@@ -67,7 +66,7 @@ public class MessageImporter {
                 if (entry.length == 2) {
                     String key = StringUtils.strip(entry[0]);
                     String value = StringUtils.strip(entry[1]);
-                    
+
                     String[] keyFragments = StringUtils.split(key, ".", 2);
 
                     if (keyFragments.length < 2) {
@@ -79,18 +78,20 @@ public class MessageImporter {
                         curSectionId = keyFragments[0];
                     }
 
-                    curSection = sections.get(curSectionId);
+                    MessageSection curSection = MessageSection.findMessageSection(curSectionId);
+//                    curSection = sections.get(curSectionId);
 
                     if (curSection == null) {
                         curSection = new MessageSection();
-                        sections.put(curSectionId, curSection);
+                        curSection.setId(curSectionId);
+//                        sections.put(curSectionId, curSection);
                     }
 
                     if (StringUtils.isNotBlank(curComment)) {
                     	curSection.setDescription(curComment);
                     	curComment = null;
                     }
-                    
+
                     Set<Message> messages = curSection.getMessages();
                     if (messages == null) {
                         messages = new HashSet<Message>();
@@ -103,6 +104,7 @@ public class MessageImporter {
                     if (res.size() > 0) {
                         message = res.get(0);
                         logger.debug("Yes, found an already persisted one: " + message);
+
                     } else {
                         message = new Message();
                     }
@@ -111,6 +113,9 @@ public class MessageImporter {
                     message.getTranslations().put(locale, value);
 
                     messages.add(message);
+//                    message.persist();
+                    
+                    curSection.persist();
 
                 } else {
                     // Could be an empty line, or an invalid line. Ignore it.
@@ -118,10 +123,20 @@ public class MessageImporter {
             }
         }
 
-        logger.info("sections: " + sections.size());
-        for (MessageSection section : sections.values()) {
-            section.persist();
-        }
+//        logger.info("sections: " + sections.size());
+//        for (MessageSection section : sections.values()) {
+//            System.out.println(": (id:" + section.getId() + ") " + section);
+//            
+//            for (Message message : section.getMessages()) {
+//                System.out.println("--: (id:" + message.getId() + ") " + message);
+//                
+//                for (Entry<MessageLocale, String> entry : message.getTranslations().entrySet()) {
+//                    System.out.println("-----: " + entry.getKey() + ": " + entry.getValue());
+//                }
+//            }
+//            
+//            section.persist();
+//        }
     }
 
     /**

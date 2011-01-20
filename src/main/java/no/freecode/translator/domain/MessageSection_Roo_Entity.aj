@@ -4,7 +4,7 @@
 package no.freecode.translator.domain;
 
 import java.lang.Integer;
-import java.lang.Long;
+import java.lang.String;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,17 +27,17 @@ privileged aspect MessageSection_Roo_Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long MessageSection.id;
+    private String MessageSection.id;
     
     @Version
     @Column(name = "version")
     private Integer MessageSection.version;
     
-    public Long MessageSection.getId() {
+    public String MessageSection.getId() {
         return this.id;
     }
     
-    public void MessageSection.setId(Long id) {
+    public void MessageSection.setId(String id) {
         this.id = id;
     }
     
@@ -94,8 +94,8 @@ privileged aspect MessageSection_Roo_Entity {
         return entityManager().createQuery("select o from MessageSection o", MessageSection.class).getResultList();
     }
     
-    public static MessageSection MessageSection.findMessageSection(Long id) {
-        if (id == null) return null;
+    public static MessageSection MessageSection.findMessageSection(String id) {
+        if (id == null || 0 == id.length()) return null;
         return entityManager().find(MessageSection.class, id);
     }
     

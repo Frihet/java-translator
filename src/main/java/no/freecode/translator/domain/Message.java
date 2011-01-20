@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,6 +19,9 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooEntity(finders = { "findMessagesByPropertyEquals" })
 public class Message extends BaseEntity {
 
+    @ManyToOne
+    private MessageSection messageSection;
+    
     @NotNull
     @Column(unique = true)
     @Size(min = 1)

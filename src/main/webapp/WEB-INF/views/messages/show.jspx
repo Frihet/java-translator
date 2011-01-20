@@ -6,5 +6,6 @@
         
     
     
+    <field:display field="messageSection" id="s_no_freecode_translator_domain_Message_messageSection" object="${message}" z="Ma/TCNlRIE/fk9MmaknwwLFyOrY="/>
     </page:show>
 </div>
