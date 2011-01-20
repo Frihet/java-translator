@@ -6,6 +6,6 @@
         
     
     
-    <field:select field="messageSection" id="c_no_freecode_translator_domain_Message_messageSection" itemValue="id" items="${messagesections}" path="/messagesections" z="gTI7fT9XJI7RBK7hLZa5V824KOM="/>
+    
     </form:update>
 </div>

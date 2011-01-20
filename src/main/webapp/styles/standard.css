@@ -229,7 +229,7 @@ ul li {
 table {
 	background: #EEEEEE;
 	margin: 2px 0 0 0;
-	border: 1px solid #BBBBBB;
+/*	border: 1px solid #BBBBBB;*/
 	border-collapse: collapse;
 /*	width: 100%*/
 }
@@ -368,6 +368,14 @@ fieldset th {
 
 
 /* Editor. */
+.info.message {
+  text-align: center;
+  font-size: 110%;
+  font-weight: bold;
+  padding: 2em;
+  color: green;
+}
+
 #editor textarea {
     margin: -1px;
     width: 100%;
@@ -375,6 +383,23 @@ fieldset th {
 
 #editor td {
     width: 350px;
+    border-right: none;
+}
+
+#editor tr.preheader td {
+	text-align: center;
+	border: none;
+	font-weight: bold;
+}
+
+#editor tr.preheader td a {
+	color: blue;
+}
+
+
+
+#editor td.property, #editor th.property {
+/*	display: none;*/
 }
 
 #editor td.property {

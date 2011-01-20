@@ -13,6 +13,9 @@ import java.beans.PropertyEditorSupport;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import no.freecode.translator.domain.MessageLocale;
 import no.freecode.translator.domain.MessageSection;
 
@@ -34,18 +37,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class EditorController {
 
     private static final Logger logger = Logger.getLogger(EditorController.class);
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "editor")
     public String editMessages(
             Model model,
             @RequestParam(value = "l", required = false) String locale,
-            @RequestParam(value = "a", required = false) HashSet<String> availableLocales) {
+            @RequestParam(value = "s", required = false) HashSet<String> availableLocales) {
 
         List<MessageLocale> locales;
         if (availableLocales == null || availableLocales.size() == 0) {
             locales = MessageLocale.findAllMessageLocalesSorted();
         } else {
             availableLocales.add("");  // always include default locale
+            if (locale != null) {
+            	availableLocales.add(locale);  // always include the locale that we're editing
+            }
             locales = MessageLocale.findMessagesIn(availableLocales);
         }
 
@@ -56,20 +62,19 @@ public class EditorController {
 
     @RequestMapping(method = RequestMethod.POST, value = "editor")
     public String saveMessages(
-            @ModelAttribute("editor") Editor editor,
-            Model model) {
+            @Valid @ModelAttribute("editor") Editor editor,
+            Model model,
+            HttpSession session) {
 
+    	editor.cleanup();
+    	
         for (MessageSection section : editor.getSections()) {
-//            logger.debug(section);
-            section.persist();
+        	section.persist();
         }
+        
+        session.setAttribute("message", "Messages saved");
 
-//        List<MessageLocale> locales = MessageLocale.findAllMessageLocalesSorted();
-//        List<MessageSection> sections = MessageSection.findAllMessageSectionsSorted();
-//
-//        model.addAttribute("locales", locales);
-//        model.addAttribute("sections", sections);
-        return "editor/index";
+        return "redirect:editor";
     }
 
 

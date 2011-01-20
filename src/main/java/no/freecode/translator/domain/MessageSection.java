@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
@@ -15,15 +15,18 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooEntity(identifierType = String.class)
+@RooEntity
 public class MessageSection {
 
+	@Id
+	private String id;
+	
     private String description;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @OneToMany(cascade = CascadeType.ALL)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL)
     @OrderBy("property")
     private Set<Message> messages = new HashSet<Message>();
 

@@ -9,6 +9,7 @@ privileged aspect MessageSection_Roo_ToString {
     
     public String MessageSection.toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Id: ").append(getId()).append(", ");
         sb.append("Description: ").append(getDescription()).append(", ");
         sb.append("Messages: ").append(getMessages() == null ? "null" : getMessages().size());
         return sb.toString();

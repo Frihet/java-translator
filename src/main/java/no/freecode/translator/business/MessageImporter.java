@@ -103,7 +103,7 @@ public class MessageImporter {
                     Message message;
                     if (res.size() > 0) {
                         message = res.get(0);
-                        logger.debug("Yes, found an already persisted one: " + message);
+                        logger.trace("Yes, found an already persisted one: " + message);
 
                     } else {
                         message = new Message();
@@ -113,8 +113,8 @@ public class MessageImporter {
                     message.getTranslations().put(locale, value);
 
                     messages.add(message);
-//                    message.persist();
                     
+                    logger.trace("persisting curSection: " + curSection);
                     curSection.persist();
 
                 } else {

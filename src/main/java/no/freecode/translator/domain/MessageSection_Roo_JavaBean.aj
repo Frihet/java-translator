@@ -9,6 +9,14 @@ import no.freecode.translator.domain.Message;
 
 privileged aspect MessageSection_Roo_JavaBean {
     
+    public String MessageSection.getId() {
+        return this.id;
+    }
+    
+    public void MessageSection.setId(String id) {
+        this.id = id;
+    }
+    
     public String MessageSection.getDescription() {
         return this.description;
     }

@@ -9,9 +9,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Version;
 import no.freecode.translator.domain.MessageSection;
@@ -24,22 +21,9 @@ privileged aspect MessageSection_Roo_Entity {
     @PersistenceContext
     transient EntityManager MessageSection.entityManager;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private String MessageSection.id;
-    
     @Version
     @Column(name = "version")
     private Integer MessageSection.version;
-    
-    public String MessageSection.getId() {
-        return this.id;
-    }
-    
-    public void MessageSection.setId(String id) {
-        this.id = id;
-    }
     
     public Integer MessageSection.getVersion() {
         return this.version;

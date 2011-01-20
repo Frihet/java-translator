@@ -8,7 +8,7 @@
         
         
         <table:column id="c_no_freecode_translator_domain_Message_translations" property="translations" z="kJ4/t1Lg+m9fd1qkcNCttZVdS8A="/>
-        <table:column id="c_no_freecode_translator_domain_Message_messageSection" property="messageSection" z="Xs5Y6YeDkfYZigq264erqR7G1qw="/>
+        
         </table:table>
     </page:list>
 </div>
