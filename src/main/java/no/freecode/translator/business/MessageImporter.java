@@ -148,9 +148,16 @@ public class MessageImporter {
     private static MessageLocale getLocale(String filename) {
         String basename = FilenameUtils.getBaseName(filename);
         String localeString = StringUtils.substringAfter(basename, "_");  // --> e.g "nb" or "nb_NO"
+        String name = StringUtils.defaultIfEmpty(localeString, "");
 
-        MessageLocale locale = new MessageLocale();
-        locale.setName(StringUtils.defaultIfEmpty(localeString, ""));
+        MessageLocale locale = MessageLocale.findMessageLocaleByName(name);
+        if (locale == null) {
+            locale = new MessageLocale();
+            locale.setName(name);
+        }
+
+//        MessageLocale locale = new MessageLocale();
+//        locale.setName(StringUtils.defaultIfEmpty(localeString, ""));
         return locale;
     }
 

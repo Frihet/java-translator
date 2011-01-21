@@ -10,6 +10,8 @@ privileged aspect MessageLocale_Roo_ToString {
     public String MessageLocale.toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("GuessedLanguage: ").append(getGuessedLanguage()).append(", ");
+        sb.append("Id: ").append(getId()).append(", ");
+        sb.append("Version: ").append(getVersion()).append(", ");
         sb.append("Name: ").append(getName()).append(", ");
         sb.append("Description: ").append(getDescription());
         return sb.toString();

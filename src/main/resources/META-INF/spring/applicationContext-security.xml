@@ -18,6 +18,9 @@
         <intercept-url pattern="/editor/**" access="hasRole('ROLE_EDITOR')"/>
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/**" access="permitAll" />
+
+        <!-- 24 hour auto-login cookie. -->
+        <remember-me token-validity-seconds="864000" />
     </http>
 
 	<!-- Configure Authentication mechanism -->
