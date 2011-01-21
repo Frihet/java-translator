@@ -415,6 +415,10 @@
 				<!--
 					<configuration> <webXml>target/web.xml</webXml> </configuration>
 				-->
+                <configuration>
+                    <!-- Exclude these files from the war file. They still need to be available for the webapp. -->
+                    <packagingExcludes>WEB-INF/classes/translator.properties</packagingExcludes>
+                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

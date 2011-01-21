@@ -19,8 +19,8 @@ import org.springframework.roo.addon.tostring.RooToString;
 public class Message extends BaseEntity {
 
     @NotNull
-    @Column(unique = true)
-    @Size(min = 1)
+    @Column(unique = true, length = 1024)
+    @Size(min = 1, max = 1024)
     private String property;
 
     @ElementCollection(fetch = FetchType.EAGER)

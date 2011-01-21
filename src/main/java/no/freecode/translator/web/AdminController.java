@@ -41,13 +41,6 @@ public class AdminController {
     @Autowired
     private MessageExporter messageExporter;
 
-//    @RequestMapping(method = RequestMethod.GET, value = "upload")
-//    public String upload(
-//            @RequestParam(value = "locale", required = false) String locale) {
-//
-//        return "editor/update";
-//    }
-
 
     /**
      * Upload messages.

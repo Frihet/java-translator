@@ -1,25 +1,23 @@
-/**
- *  Project: translator
- *  Created: Dec 3, 2010
- *  Copyright: 2010, FreeCode AS
- *
- *  This file is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published
- *  by the Free Software Foundation; version 3.
- */
 package no.freecode.translator.web;
 
 import java.beans.PropertyEditorSupport;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
+import no.freecode.translator.domain.Message;
 import no.freecode.translator.domain.MessageLocale;
 import no.freecode.translator.domain.MessageSection;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,72 +32,103 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
+@Secured({ "ROLE_EDITOR" })
+@RequestMapping("editor")
 public class EditorController {
 
     private static final Logger logger = Logger.getLogger(EditorController.class);
 
-    @RequestMapping(method = RequestMethod.GET, value = "editor")
-    public String editMessages(
-            Model model,
-            @RequestParam(value = "l", required = false) String locale,
-            @RequestParam(value = "s", required = false) HashSet<String> availableLocales) {
+    @Autowired
+    private transient MailSender mailTemplate;
 
+    @Autowired
+    private transient SimpleMailMessage simpleMailMessage;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String editMessages(Model model, @RequestParam(value = "l", required = false) String locale, @RequestParam(value = "s", required = false) HashSet<String> availableLocales) {
         List<MessageLocale> locales;
         if (availableLocales == null || availableLocales.size() == 0) {
             locales = MessageLocale.findAllMessageLocalesSorted();
         } else {
-            availableLocales.add("");  // always include default locale
+            availableLocales.add("");
             if (locale != null) {
-            	availableLocales.add(locale);  // always include the locale that we're editing
+                availableLocales.add(locale);
             }
             locales = MessageLocale.findMessagesIn(availableLocales);
         }
-
-    	model.addAttribute("currentLocaleString", locale);
-    	model.addAttribute("locales", locales);
+        model.addAttribute("currentLocaleString", locale);
+        model.addAttribute("locales", locales);
         return "editor/index";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "editor")
-    public String saveMessages(
-            @Valid @ModelAttribute("editor") Editor editor,
-            Model model,
-            HttpSession session) {
-
-    	editor.cleanup();
-    	
+    @RequestMapping(method = RequestMethod.POST)
+    public String saveMessages(@ModelAttribute("editor") Editor editor, Model model, HttpSession session) {
+        editor.cleanup();
         for (MessageSection section : editor.getSections()) {
-        	section.persist();
+            section.persist();
         }
         
+        dumpInfoToMail(session, editor);
+        
         session.setAttribute("message", "Messages saved");
-
         return "redirect:editor";
     }
 
+    private void dumpInfoToMail(HttpSession session, Editor editor) {
+        try {
+            HashMap<MessageLocale, Integer> counters = new HashMap<MessageLocale, Integer>();
+            for (MessageSection section : editor.getSections()) {
+                for (Message message : section.getMessages()) {
+                    for (Entry<MessageLocale, String> entry : message.getTranslations().entrySet()) {
+                        Integer counter = counters.get(entry.getKey());
+                        if (counter == null) {
+                            counter = 1;
+                        } else {
+                            counter ++;
+                        }
+                        counters.put(entry.getKey(), counter);
+                    }
+                }
+            }
 
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Number of entries:\n");
+            for (Entry<MessageLocale, Integer> entry : counters.entrySet()) {
+                sb.append("  " + entry.getKey().getGuessedLanguage() + ": " + entry.getValue() + "\n");
+            }
+
+            sb.append("\n\nSession data:\n");
+            Enumeration names = session.getAttributeNames();
+            while (names.hasMoreElements()) {
+                String key = (String) names.nextElement();
+                sb.append(" " + key + ": " + session.getAttribute(key) + "\n");
+            }
+    
+            sendMessage("reidar.oksnevad@freecode.no", "Messages were saved." + sb.toString());
+
+        } catch (Exception e) {
+            // Don't let method fail the rest of the saving. It's not important.
+        }
+    }
+    
     @ModelAttribute("editor")
     public Editor getEditor() {
         return new Editor(MessageSection.findAllMessageSectionsSorted());
     }
-    
+
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.registerCustomEditor(MessageLocale.class, new PropertyEditorSupport() {
-            /* (non-Javadoc)
-             * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
-             */
+
             @Override
             public void setAsText(String text) throws IllegalArgumentException {
                 setValue(MessageLocale.findMessageLocale(Long.parseLong(text)));
             }
-            
-            /* (non-Javadoc)
-             * @see java.beans.PropertyEditorSupport#getAsText()
-             */
+
             @Override
             public String getAsText() {
-               MessageLocale locale = (MessageLocale) getValue();
+                MessageLocale locale = (MessageLocale) getValue();
                 if (locale == null) {
                     return null;
                 } else {
@@ -107,5 +136,11 @@ public class EditorController {
                 }
             }
         });
+    }
+
+    public void sendMessage(String mailTo, String message) {
+        simpleMailMessage.setTo(mailTo);
+        simpleMailMessage.setText(message);
+        mailTemplate.send(simpleMailMessage);
     }
 }

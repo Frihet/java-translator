@@ -16,17 +16,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
+import javax.validation.Valid;
 
 import no.freecode.translator.domain.Message;
 import no.freecode.translator.domain.MessageLocale;
 import no.freecode.translator.domain.MessageSection;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Reidar Øksnevad <reidar.oksnevad@freecode.no>
  */
 public class Editor {
 
+    @Valid
     private List<MessageSection> sections = new ArrayList<MessageSection>();
 
     public Editor() { }
