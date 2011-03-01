@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------
+ Java Message Translator
+-------------------------------------------------------------------------------
+
+  Java Message Translator is a Web based i18n property file
+  editor. When working with Java applications that need to be
+  translated, it can be difficult to keep all the .properties-files
+  up-to-date, as the translations usually need to be done by someone
+  else, probably in another country.
+
+  It is in an early stages of development, but I have successfully
+  used it for a project already.
+
+
+  BUILDING AND DEVELOPING:
+  ========================
+
+  To build the project, make sure you have Maven installed, and in the
+  project root folder type:
+
+    mvn package
+
+  This will download all the jar dependencies, and you will end up
+  with a war-file in the target/ folder.
+
+  If you want to create Eclipse project files, simply type:
+
+    mvn eclipse:eclipse
+
+  If you just want to test the application, start it up in a local
+  Tomcat container by typing:
+
+    mvn tomcat:run
+
+
+  It may not be necessary, but I highly recommend installing a Maven
+  plugin for Eclipse. For example this one:
+
+    http://m2eclipse.sonatype.org/
+
+  Finally, since Spring Roo has been used, it's probably a good idea
+  to install that as well. See:
+
+    http://www.springsource.org/roo
