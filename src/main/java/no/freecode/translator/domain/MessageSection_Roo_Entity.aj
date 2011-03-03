@@ -57,6 +57,12 @@ privileged aspect MessageSection_Roo_Entity {
     }
     
     @Transactional
+    public void MessageSection.clear() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        this.entityManager.clear();
+    }
+    
+    @Transactional
     public MessageSection MessageSection.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         MessageSection merged = this.entityManager.merge(this);

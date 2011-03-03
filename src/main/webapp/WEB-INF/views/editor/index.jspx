@@ -5,7 +5,7 @@
 
   <c:set var="ncolumns" value="${fn:length(locales) + 1}"></c:set>
 
-  <form:form modelAttribute="editor" acceptCharset="utf-8" >
+  <form:form id="editor" modelAttribute="editor" acceptCharset="utf-8" >
      <table>
        <tr class="preheader">
          <td class="property"></td>
@@ -30,16 +30,19 @@
                <td class="property">${message.property}</td>
 
                <c:forEach items="${locales}" var="locale" varStatus="localeStatus">
-                 <td>
-                   <c:choose>
-                     <c:when test="${locale.name == currentLocaleString}">
-                        <form:textarea path="sections[${sectionStatus.index}].messages[${messageStatus.index}].translations[${locale.id}]" />
-                     </c:when>
-                     <c:otherwise>
-                        ${message.translations[locale]}
-                     </c:otherwise>
-                   </c:choose>
-                 </td>
+                 <c:set var="classes" value="" />
+
+                 <c:choose>
+                   <c:when test="${locale.name == currentLocaleString}">
+                      <td><form:textarea path="sections[${sectionStatus.index}].messages[${messageStatus.index}].translations[${locale.id}]" cssClass="translation" /></td>
+                   </c:when>
+                   <c:otherwise>
+                      <c:if test="${localeStatus.count == 1}">
+                        <c:set var="classes" value="base-translation" />
+                      </c:if>
+                      <td class="${classes}">${message.translations[locale]}</td>
+                   </c:otherwise>
+                 </c:choose>
                </c:forEach>
              </tr>
            </c:forEach>
@@ -58,5 +61,64 @@
     </c:if>
 
   </form:form>
+
+<script type="text/javascript">
+/*
+  $.validator.setDefaults({
+    submitHandler: function() { alert("submitted!"); }
+  });
+*/
+
+  $.validator.addMethod("translation", function(translatedText, element) {
+
+    if (translatedText.length == 0) {
+      return true;
+    }
+
+    var translation = $(element);
+    var findings = [];
+    
+    translation.parentsUntil('tr').siblings('.base-translation:first').each(function() {
+      var baseText = $(this).text();
+
+      var regex = /\{.*?\}/gi, result;
+      while ( (result = regex.exec(baseText)) ) {
+        findings.push(String(result));
+      }
+    });
+
+    var missing = [];
+    $.each(findings, function(i, finding) {
+      if (translatedText.indexOf(finding) == -1) {
+        missing.push(finding);
+      }
+    });
+
+    if (missing.length > 0) {
+      $.validator.messages.translation = 'Missing wildcard' + (missing.length == 1 ? '' : 's') + ': '
+           + missing.toString().replace(/{/g, '{ ');
+      return false;
+
+    } else {
+      // No errors
+      return true;
+    }
+  }, '');
+
+  $(document).ready(function() {
+    $('#editor').validate();
+  });
+    
+/*      rules: {
+    {
+        translation: {
+          depends: function(elem) {
+            return false;
+          }
+        }
+      }
+    });
+*/
+</script>
 
 </div>

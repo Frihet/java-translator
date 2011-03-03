@@ -73,6 +73,12 @@ privileged aspect MessageLocale_Roo_Entity {
     }
     
     @Transactional
+    public void MessageLocale.clear() {
+        if (this.entityManager == null) this.entityManager = entityManager();
+        this.entityManager.clear();
+    }
+    
+    @Transactional
     public MessageLocale MessageLocale.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         MessageLocale merged = this.entityManager.merge(this);

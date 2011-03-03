@@ -20,12 +20,7 @@
   </c:set>
 
   <script type="text/javascript">var djConfig="${userLocale}"; </script>
-
-<!--  <script src="${dojo_url}" type="text/javascript" djConfig="isDebug: false, parseOnLoad: true"> required for FF3 and Opera </script>-->
-<!--  <script src="${spring_url}" type="text/javascript"> /required for FF3 and Opera </script>-->
-<!--  <script src="${spring_dojo_url}" type="text/javascript"> required for FF3 and Opera </script>-->
-<!--  <script language="JavaScript" type="text/javascript">dojo.require("dojo.parser");</script>-->
-
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
-  <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js" type="text/javascript"><!-- required for FF3 and Opera --></script>
+ 
 </jsp:root>

@@ -4,3 +4,5 @@
 .springBeans
 log.roo
 target/
+derby.log
+translator_db/
